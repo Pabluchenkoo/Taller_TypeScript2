@@ -9,14 +9,22 @@ export var series = [
 ];
 var seriesTable = document.getElementById("series");
 var promedioSeasons = document.getElementById("avg");
+var card = document.getElementById("card");
 imprimirSeries(series);
+createCard("Pick a serie", "Pick a serie", "Pick a serie", "Pick a serie");
 // @ts-ignore
 promedioSeasons.innerHTML = "Seasons Average: " + darPromedioSeasons(series).toString();
 function mostrarDatosSeries(series) {
     var tbodySerie = document.createElement("tbody");
-    tbodySerie.innerHTML = "<tr><td> ".concat(series.id, "</td>\n        <td><a href = ").concat(series.wtw, ">").concat(series.name, "</td>\n        <td>").concat(series.channel, "</td>\n        <td>").concat(series.seasons, "</td>");
+    tbodySerie.innerHTML = "<tr><td> ".concat(series.id, "</td>\n        <td><a href = \"#\">").concat(series.name, "</td>\n        <td>").concat(series.channel, "</td>\n        <td>").concat(series.seasons, "</td>");
     // @ts-ignore
     seriesTable.appendChild(tbodySerie);
+    tbodySerie.addEventListener("click", function () { createCard(series.name, series.synopsis, series.wtw, series.image); });
+}
+function createCard(name, synopsys, wtw, image) {
+    var tbodyCard = document.createElement("tbody");
+    tbodyCard.innerHTML = "<img class=\"card-img-top\" src= ".concat(image, " alt=\"season img\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\" id=\"card-title\">").concat(name, "</h5>\n                <p class=\"card-text\" id=\"synopsis\">").concat(synopsys, "</p>\n                <a href=\"#\" id=\"link\">").concat(wtw, "</a>");
+    card.replaceChild(tbodyCard, card.childNodes[1]);
 }
 function imprimirSeries(series) {
     for (var i = 0; i < series.length; i++) {

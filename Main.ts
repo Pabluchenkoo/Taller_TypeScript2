@@ -20,22 +20,36 @@ export const series = [
         "https://www.bbc.co.uk/programmes/p065smy4", "https://i.imgur.com/D4y3DrQ.jpg"),
 ];
 
-let seriesTable = document.getElementById("series");
-let promedioSeasons = document.getElementById("avg");
-
+let seriesTable = document.getElementById("series")!;
+let promedioSeasons = document.getElementById("avg")!;
+let card = document.getElementById("card")!;
 
 imprimirSeries(series);
-// @ts-ignore
+createCard("Pick a serie","Pick a serie","Pick a serie","Pick a serie");
+
 promedioSeasons.innerHTML = "Seasons Average: "+ darPromedioSeasons(series).toString();
 
 function mostrarDatosSeries(series : Serie):void{
     let tbodySerie = document.createElement("tbody");
     tbodySerie.innerHTML = `<tr><td> ${series.id}</td>
-        <td><a href = ${series.wtw}>${series.name}</td>
+        <td><a href = "#">${series.name}</td>
         <td>${series.channel}</td>
         <td>${series.seasons}</td>`
     // @ts-ignore
     seriesTable.appendChild(tbodySerie);
+    tbodySerie.addEventListener("click", () => {createCard(series.name,series.synopsis,series.wtw,series.image)});
+
+}
+
+function createCard(name:String, synopsys:String, wtw:String,image:String):void{
+
+    let tbodyCard = document.createElement("tbody");
+    tbodyCard.innerHTML = `<img class="card-img-top" src= ${image} alt="season img">
+            <div class="card-body">
+                <h5 class="card-title" id="card-title">${name}</h5>
+                <p class="card-text" id="synopsis">${synopsys}</p>
+                <a href="#" id="link">${wtw}</a>`
+    card.replaceChild(tbodyCard,card.childNodes[1]);
 }
 
 function imprimirSeries(series : Serie[]):void{
